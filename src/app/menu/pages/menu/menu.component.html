@@ -1,0 +1,35 @@
+<div class="mb-5" *ngFor="let category of $any(categories)">
+  <div id="category{{category.id}}" style="scroll-margin-top: 100px;">
+    <h1 class="text-center" style="font-family: 'Dancing Script', cursive;">{{ category.name }}</h1>
+
+    <div *ngFor="let menu of category.menus" class="row row-cols-1 g-4 mb-3">
+      <div class="col-md-12 col-lg-8 offset-lg-2">
+        <div class="card shadow" aria-hidden="true">
+          <div class="row g-0">
+            <div class="col-md-4">
+
+              <img
+                [src]="menu.hasPhoto ? 'assets/images/menu/' + menu.id + '.jpg' : 'assets/images/defaultMenuThumb.jpg'"
+                style="" class="card-img-top" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body h-100 row align-items-end">
+                <h5 class="card-title row">
+                  <div class="col">
+                    {{ menu.name }}
+                  </div>
+                  <div class="col-3 col-md-2 text-end fs-6 fw-normal">{{ menu.price | number: '1.2' }}</div>
+                </h5>
+                <p class="card-text mb-0">{{ menu.description }}</p>
+                <div class="text-center mt-3 mt-md-1">
+                  <button (click)="addToCart(menu.id)" class="btn btn-outline-dark">Add to cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
