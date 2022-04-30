@@ -5,6 +5,9 @@
     <p *ngIf="control.errors['required']">
       Value is required
     </p>
+    <p *ngIf="control.errors['min']">
+      Value needs to be at least {{ control.errors['min']['min']}}.
+    </p>
     <p *ngIf="control.errors['minlength']">
       Value needs to be at least {{ control.errors['minlength']['requiredLength'] }} letters.
     </p>
@@ -13,9 +16,6 @@
     </p>
     <p *ngIf="control.errors['pattern']">
       Invalid format
-    </p>
-    <p *ngIf="control.errors['nonUniqueUsername']">
-      Username already exists.
     </p>
     <p *ngIf="control.errors['noConnection']">
       Failed to communicate with the server.
