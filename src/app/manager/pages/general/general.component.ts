@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ManagerService} from "../../../core/manager.service";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {SaveButtonComponent} from "../../../shared/save-button/save-button.component";
+import {Subject} from "rxjs";
 
 
 @Component({
@@ -10,7 +10,7 @@ import {SaveButtonComponent} from "../../../shared/save-button/save-button.compo
   styleUrls: ['./general.component.css']
 })
 export class GeneralComponent implements OnInit {
-  @ViewChild(SaveButtonComponent) saveButton!:SaveButtonComponent;
+  signal$: Subject<boolean> = new Subject<boolean>();
   generalForm = new FormGroup({
     openHour: new FormControl('', [
       Validators.required
@@ -37,7 +37,8 @@ export class GeneralComponent implements OnInit {
     this.managerService.putConfig(this.generalForm.value)
       .subscribe({
           next: res => {
-            this.saveButton.saved();
+            // Tell the child component to do execute saved() in its component.
+            this.signal$.next(true);
           },
           error: (err) => {
             if (!err.status) {
