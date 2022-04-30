@@ -1,7 +1,7 @@
 import {Component, OnInit } from '@angular/core';
 import {CustomerService} from "../../../core/customer.service";
-import {getAllMenusResponse} from "../../../core/models/getAllMenusResponse";
-import {getAllCategoriesResponse} from "../../../core/models/getAllCategoriesResponse";
+import {Menu} from "../../../core/models/menu";
+import {Category} from "../../../core/models/category";
 import {ActivatedRoute} from '@angular/router';
 import {delay, Subscription} from "rxjs";
 
@@ -9,7 +9,7 @@ import {delay, Subscription} from "rxjs";
 interface mergedCategory {
   id: number,
   name: string,
-  menus: getAllMenusResponse[]
+  menus: Menu[]
 }
 
 @Component({
@@ -20,8 +20,8 @@ interface mergedCategory {
 export class MenuComponent implements OnInit {
   id: string | null = null;
   sub?: Subscription;
-  menus: getAllMenusResponse[] = [];
-  categories: getAllCategoriesResponse[] | mergedCategory[] = [];
+  menus: Menu[] = [];
+  categories: Category[] | mergedCategory[] = [];
   categoryHash: {[key: number] : number} = {};
 
   constructor(private customerService: CustomerService, private route: ActivatedRoute) {
@@ -72,14 +72,14 @@ export class MenuComponent implements OnInit {
     });
 
     // Insert the menu to the corresponding category item, as in a menus array.
-    this.menus.forEach((menu: getAllMenusResponse) => {
+    this.menus.forEach((menu: Menu) => {
       (this.categories[this.categoryHash[menu.categoryId]] as mergedCategory)['menus'].push(menu);
     });
 
   }
 
   addToCart(id: number) {
-    console.log(`${id} is added to cart.`)
+    this.customerService.postCart(id).subscribe();
   }
 
   toSection(section: string){
@@ -88,7 +88,6 @@ export class MenuComponent implements OnInit {
       elem.scrollIntoView();
     } else {
       // DOM wasn't rendered yet because of slow connection. Retry in 500ms
-      console.log("DOM wasn't ready. ")
       setTimeout(() => { this.toSection(section)}, 500);
     }
   }

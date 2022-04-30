@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CustomerService} from "../../core/customer.service";
-import {getAllCategoriesResponse} from "../../core/models/getAllCategoriesResponse";
+import {Category} from "../../core/models/category";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +8,8 @@ import {getAllCategoriesResponse} from "../../core/models/getAllCategoriesRespon
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  categories!: getAllCategoriesResponse[];
+  categories!: Category[];
+  cartCount = 0;
 
   constructor(private customerService: CustomerService ) { }
 
@@ -18,6 +19,12 @@ export class HeaderComponent implements OnInit {
       }
     );
 
+    // Just to fetch total number of carts. Should be changed after implementing authentication.
+    this.customerService.getAllCarts().subscribe();
+
+    this.customerService.cartCount$.subscribe(res => {
+      this.cartCount = res;
+    })
   }
 
 }
