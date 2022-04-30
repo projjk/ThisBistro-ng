@@ -14,28 +14,35 @@ export class SaveButtonComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.signal$ != null) {
-      this.signal$.subscribe(() => {
-        // When signal received, execute the following method
-        this.saved();
+      this.signal$.subscribe(res => {
+        // When signal received, execute the following methods
+        this.changeButton(res);
       })
     }
   }
 
-  private saved() {
+  private changeButton(success: boolean) {
+    let cssClass = "btn-outline-success";
+    let buttonValue = "Saved";
     let button = document.querySelector("#submitButton");
+
+    if (!success) {
+      cssClass = "btn-outline-danger"
+      buttonValue = "Failed"
+    }
+
     if (button) {
-      button.innerHTML = "Saved";
+      button.innerHTML = buttonValue;
       button.classList.remove("btn-outline-dark");
-      button.classList.add("btn-outline-success");
+      button.classList.add(cssClass);
       setTimeout(() => {
         if (button) {
           button.innerHTML = "Save";
-          button.classList.remove("btn-outline-success");
+          button.classList.remove(cssClass);
           button.classList.add("btn-outline-dark");
           console.log(button)
         }
       }, 3000)
     }
   }
-
 }
