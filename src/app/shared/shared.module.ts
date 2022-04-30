@@ -6,6 +6,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {InputComponent} from './input/input.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
+import { SaveButtonComponent } from './save-button/save-button.component';
 
 
 @NgModule({
@@ -13,13 +14,15 @@ import {RouterModule} from "@angular/router";
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    InputComponent
+    InputComponent,
+    SaveButtonComponent
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    InputComponent
-  ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        InputComponent,
+        SaveButtonComponent
+    ],
   imports: [
     CommonModule,
     RouterModule,
