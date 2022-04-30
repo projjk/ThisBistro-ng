@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col col-lg-10 offset-lg-1 col-xl-6 offset-xl-3 shadow">
+    <nav class="nav nav-tabs">
+      <a class="nav-link link-secondary" routerLink="./" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">General</a>
+      <a class="nav-link link-secondary" routerLink="./category" routerLinkActive="active">Category</a>
+      <a class="nav-link link-secondary" routerLink="./menu" routerLinkActive="active">Menu</a>
+      <a class="nav-link link-secondary" routerLink="./order" routerLinkActive="active">Order</a>
+      <a class="nav-link link-secondary" routerLink="./customer" routerLinkActive="active">Customer</a>
+    </nav>
+    <div class="p-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
