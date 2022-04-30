@@ -91,15 +91,16 @@ export class CartComponent implements OnInit {
   placeOrder() {
     this.customerService.postOrder().subscribe({
       next: () => {
-        this.carts = [];
         this.modal.title = "Thank you!";
         this.modal.body = "<p>We received your order.</p><p>We will send you an email when your meal is ready.</p>";
         this.customerService.cartCount$.next(0);
+        setTimeout(() => {this.carts = [];}, 1000);
+
       },
       error: (err) => {
         if (err.status === 404) {
           this.modal.title = "Oops";
-          this.modal.body = "You have no item in your cart.";
+          this.modal.body = "You have no items in your cart.";
         } else {
           this.modal.title = "Oops";
           this.modal.body = "Something went wrong.";
