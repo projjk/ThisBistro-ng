@@ -8,6 +8,8 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { GeneralComponent } from './pages/general/general.component';
 import { OrderComponent } from './pages/order/order.component';
 import { CustomerComponent } from './pages/customer/customer.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { CustomerComponent } from './pages/customer/customer.component';
   ],
   imports: [
     CommonModule,
-    ManagerRoutingModule
+    ManagerRoutingModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class ManagerModule { }
