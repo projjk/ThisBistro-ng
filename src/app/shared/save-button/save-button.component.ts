@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-save-button',
@@ -7,12 +7,21 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./save-button.component.css']
 })
 export class SaveButtonComponent implements OnInit {
-  constructor() { }
+  @Input() signal$?: Observable<boolean>;
 
-  ngOnInit(): void {
+  constructor() {
   }
 
-  saved() {
+  ngOnInit(): void {
+    if (this.signal$ != null) {
+      this.signal$.subscribe(() => {
+        // When signal received, execute the following method
+        this.saved();
+      })
+    }
+  }
+
+  private saved() {
     let button = document.querySelector("#submitButton");
     if (button) {
       button.innerHTML = "Saved";
