@@ -9,5 +9,10 @@
 
   <div class="mt-3">
     <app-save-button [signal$]="signal$"></app-save-button>
+    <div *ngIf="generalForm.errors" class="text-danger mt-2">
+      <p *ngIf="generalForm.errors['noUpdate']">
+        No change to update
+      </p>
+    </div>
   </div>
 </form>

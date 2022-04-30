@@ -37,12 +37,15 @@ export class GeneralComponent implements OnInit {
     this.managerService.putConfig(this.generalForm.value)
       .subscribe({
           next: res => {
-            // Tell the child component to do execute saved() in its component.
+            // Tell the child component to change the button value in its component.
             this.signal$.next(true);
           },
           error: (err) => {
+            this.signal$.next(false);
             if (!err.status) {
               this.generalForm.setErrors({ noConnection: true });
+            } else if (err.status === 400) {
+              this.generalForm.setErrors({ noUpdate: true });
             } else {
               this.generalForm.setErrors({ unknownError: true })
             }
