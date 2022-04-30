@@ -1,7 +1,7 @@
-<div class="field">
-  <label>{{ label }}</label>
-  <input [type]="inputType" [formControl]="control"/>
-  <div *ngIf="showErrors() && control.errors" class="ui pointing red basic label">
+<div>
+  <label class="form-label">{{ label }}</label>
+  <input [ngClass]="{ 'is-invalid': showErrors() && control.errors }" class="form-control" [type]="inputType" [formControl]="control"/>
+  <div *ngIf="showErrors() && control.errors" class="invalid-feedback">
     <p *ngIf="control.errors['required']">
       Value is required
     </p>
