@@ -40,7 +40,6 @@ export class SaveButtonComponent implements OnInit {
           button.innerHTML = "Save";
           button.classList.remove(cssClass);
           button.classList.add("btn-outline-dark");
-          console.log(button)
         }
       }, 3000)
     }
