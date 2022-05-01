@@ -1,0 +1,106 @@
+
+<div class="row row-cols-1 mb-5">
+  <div *ngIf="menus.length > 0" class="col table-responsive-sm">
+    <table class="table table-hover">
+      <thead>
+      <tr class="">
+        <th scope="col" style="width:10%;" >Order</th>
+        <th scope="col">Menu Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Sold</th>
+        <th scope="col">Category</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr (click)="edit(menu.id)" *ngFor="let menu of menus">
+        <td  style="width:10%;" class="col-2 text-end">{{menu.arrangement}}</td>
+        <td class="col">{{ menu.name }} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg></td>
+        <td>{{menu.price | number: '1.2'}}</td>
+        <td>{{menu.sold}}</td>
+        <td>{{menu.categoryName}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col col-md-10 offset-md-1 col-lg-6 offset-lg-3 text-center">
+    <button (click)="edit(0)" class="w-100 btn btn-outline-dark" style="height: 3rem">Add</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<form id="menuForm" (ngSubmit)="onSubmit()" [formGroup]="menuForm">
+  <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="menuModalLabel">{{ modalTitle }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-3">
+              <app-input inputType="number" label="Order" [control]="$any(menuForm).get('arrangement')"></app-input>
+            </div>
+            <div class="col">
+              <app-input inputType="text" label="Menu Name" [control]="$any(menuForm).get('name')"></app-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              <app-input inputType="text" label="Price" [control]="$any(menuForm).get('price')"></app-input>
+            </div>
+            <div class="col">
+              <app-input inputType="text" label="Description" [control]="$any(menuForm).get('description')"></app-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="categorySelect" class="form-label">Category</label>
+              <select [ngClass]="{ 'is-invalid': menuForm.get('categoryId')!.touched && menuForm.get('categoryId')!.errors }" id="categorySelect"
+                      class="form-select" aria-label="Category Select" formControlName="categoryId">
+                <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name}}</option>
+              </select>
+              <div *ngIf="menuForm.get('categoryId')!.touched && menuForm.get('categoryId')!.errors" class="invalid-feedback">
+                <p *ngIf="menuForm.get('categoryId')!.errors!['required']">
+                  Value is required
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <label for="formFile" class="form-label">File Upload</label>
+              <input class="form-control" type="file" id="formFile">
+<!--              <app-input inputType="file" label="Photo Upload" [control]="$any(menuForm).get('hasPhoto')"></app-input>-->
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="currentMenuId" class="btn btn-outline-danger" type="button" (click)="toggleModal()">Delete</button>
+          <app-save-button [signal$]="signal$"></app-save-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal fade" id="deleteModal" aria-hidden="true" aria-labelledby="deleteModalLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this?
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="deleteMessage" class="text-danger">{{ deleteMessage }}</div>
+        <button class="btn btn-danger" (click)="delete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+

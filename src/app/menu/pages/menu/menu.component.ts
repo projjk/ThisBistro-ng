@@ -1,4 +1,4 @@
-import {Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CustomerService} from "../../../core/customer.service";
 import {Menu} from "../../../core/models/menu";
 import {Category} from "../../../core/models/category";
@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
   sub?: Subscription;
   menus: Menu[] = [];
   categories: Category[] | mergedCategory[] = [];
-  categoryHash: {[key: number] : number} = {};
+  categoryHash: { [key: number]: number } = {};
 
   constructor(private customerService: CustomerService, private route: ActivatedRoute) {
   }
@@ -82,13 +82,15 @@ export class MenuComponent implements OnInit {
     this.customerService.postCart(id).subscribe();
   }
 
-  toSection(section: string){
+  toSection(section: string) {
     const elem = document.querySelector('#category' + section);
-    if(elem != null) {
+    if (elem != null) {
       elem.scrollIntoView();
     } else {
       // DOM wasn't rendered yet because of slow connection. Retry in 500ms
-      setTimeout(() => { this.toSection(section)}, 500);
+      setTimeout(() => {
+        this.toSection(section)
+      }, 500);
     }
   }
 }
