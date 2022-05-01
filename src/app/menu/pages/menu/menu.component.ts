@@ -73,7 +73,7 @@ export class MenuComponent implements OnInit {
 
     // Insert the menu to the corresponding category item, as in a menus array.
     this.menus.forEach((menu: Menu) => {
-      (this.categories[this.categoryHash[menu.categoryId]] as mergedCategory)['menus'].push(menu);
+      (this.categories[this.categoryHash[menu.categoryId]] as mergedCategory)?.['menus'].push(menu);
     });
 
   }
