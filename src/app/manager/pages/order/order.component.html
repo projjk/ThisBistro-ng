@@ -1,0 +1,102 @@
+
+<div class="row row-cols-1 mb-5">
+  <div *ngIf="orders.length > 0" class="col table-responsive-sm">
+    <table class="table table-hover">
+      <thead>
+      <tr class="">
+        <th scope="col">#</th>
+        <th scope="col">Order Date</th>
+        <th scope="col">Order Items</th>
+        <th scope="col">Price</th>
+        <th scope="col">Status</th>
+        <th scope="col">userId</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr (click)="edit(order.id)" *ngFor="let order of orders; index as i">
+        <th scope="row">{{i}}</th>
+        <td>{{order.date | date:'M/d hh:mm' }}</td>
+        <td>
+          <p class="mb-1" *ngFor="let orderItem of order.orderItems">{{ orderItem.menuName }}</p>
+        </td>
+        <td>{{order.price | number: '1.2'}}</td>
+        <td>{{orderStatusEnum[order.status]}}</td>
+        <td>{{order.userId}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<form id="orderForm" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderModalLabel">{{ modalTitle }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <label for="orderDate" class="col-sm-2 col-form-label">Date</label>
+              <input type="text" readonly class="form-control" id="orderDate" value="{{ currentOrder?.date | date: 'M/d/yy hh:mm' }}">
+            </div>
+            <div class="col">
+              <label for="userId" class="col-sm-2 col-form-label">User</label>
+              <input type="text" readonly class="form-control" id="userId" value="{{ currentOrder?.userId }}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="orderPrice" class="col-sm-2 col-form-label">Price</label>
+              <input type="text" readonly class="form-control" id="orderPrice" value="{{ currentOrder?.price | number:'1.2' }}">
+            </div>
+            <div class="col">
+              <label for="statusSelect" class="form-label py-1">Status</label>
+              <select [ngClass]="{ 'is-invalid': orderForm.get('status')!.touched && orderForm.get('status')!.errors }" id="statusSelect"
+                      class="form-select" aria-label="Status Select" formControlName="status">
+                <option *ngFor="let status of orderStatusEnum; index as i" [ngValue]="i">{{ status }}</option>
+              </select>
+              <div *ngIf="orderForm.get('status')!.touched && orderForm.get('status')!.errors" class="invalid-feedback">
+                <p *ngIf="orderForm.get('status')!.errors!['required']">
+                  Value is required
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <div *ngIf="orderForm.errors" class="text-danger">
+            <p *ngIf="orderForm.errors['noUpdate']">
+              No change to update
+            </p>
+          </div>
+          <button *ngIf="currentOrder" class="btn btn-outline-danger" type="button" (click)="toggleModal()">Delete</button>
+          <app-save-button [signal$]="signal$"></app-save-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal fade" id="deleteModal" aria-hidden="true" aria-labelledby="deleteModalLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Order</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this?
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="deleteMessage" class="text-danger">{{ deleteMessage }}</div>
+        <button class="btn btn-danger" (click)="delete($event)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+

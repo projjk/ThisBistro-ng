@@ -4,6 +4,8 @@ import {Config} from "./models/config";
 import {Category} from "./models/category";
 import {ManagerMenu} from "./models/managerMenu";
 import {ManagerMenuDto} from "./models/managerMenuDto";
+import {Order} from "./models/order";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,25 @@ export class ManagerService {
 
   deleteMenu(id: number) {
     return this.http.delete(`${this.rootUrl}/menu/${id}`, {headers: this.headers});
+  }
+
+  // Order
+  getAllOrders() {
+    return this.http.get<Order[]>(`${this.rootUrl}/order`)
+      .pipe(map(res => {
+        res.forEach(val => {
+          val.userId = val.userId.slice(0,6)
+        });
+        return res;
+      }));
+  }
+
+  putOrder(dto: ManagerMenuDto) {
+    return this.http.put<Order>(`${this.rootUrl}/order/${dto.id}`, dto, {headers: this.headers});
+  }
+
+  deleteOrder(id: number) {
+    return this.http.delete(`${this.rootUrl}/order/${id}`, {headers: this.headers});
   }
 
 }
