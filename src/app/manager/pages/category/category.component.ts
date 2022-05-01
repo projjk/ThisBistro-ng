@@ -74,10 +74,12 @@ export class CategoryComponent implements OnInit {
 
   onSubmit() {
     if (this.categoryForm.invalid) {
+      this.categoryForm.markAllAsTouched();
       this.signal$.next(false);
       return;
     }
 
+    // Adding a new category
     if (this.categoryForm.get("id")?.value === 0) {
       this.managerService.postCategory(this.categoryForm.value)
         .subscribe({
@@ -98,6 +100,7 @@ export class CategoryComponent implements OnInit {
       return;
     }
 
+    // Modifying an existing category
     this.managerService.putCategory(this.categoryForm.value)
       .subscribe({
           next: res => {
