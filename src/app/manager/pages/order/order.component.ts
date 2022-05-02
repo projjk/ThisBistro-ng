@@ -39,7 +39,6 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
     this.managerService.getAllOrders().subscribe(res => {
       this.orders = res;
-      console.log(this.orders)
     });
 
     this.orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
@@ -76,7 +75,6 @@ export class OrderComponent implements OnInit {
 
   onSubmit() {
     if (this.orderForm.invalid) {
-      console.log("invalid:",this.orderForm);
       this.orderForm.markAllAsTouched();
       this.signal$.next(false);
       return;
@@ -95,8 +93,6 @@ export class OrderComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.log("error:",this.orderForm.value);
-            console.log(err);
             this.signal$.next(false);
             if (!err.status) {
               this.orderForm.setErrors({ noConnection: true });

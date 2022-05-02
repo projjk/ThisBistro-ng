@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MenuModule} from "./menu/menu.module";
 import { CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
-import {ManagerModule} from "./manager/manager.module";
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import {ManagerModule} from "./manager/manager.module";
     CoreModule,
     MenuModule,
     AppRoutingModule,
-    ManagerModule,
     SharedModule,
     ReactiveFormsModule,
   ],

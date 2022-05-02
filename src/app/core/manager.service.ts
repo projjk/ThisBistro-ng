@@ -11,7 +11,7 @@ import {map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class ManagerService {
-  rootUrl = "https://localhost:7016/api/manager"
+  rootUrl = "https://thisbistro.com:7020/api/manager"
   headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });

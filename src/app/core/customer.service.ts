@@ -11,7 +11,7 @@ import {BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class CustomerService {
-  rootUrl = "https://localhost:7016/api"
+  rootUrl = "https://thisbistro.com:7020/api"
   headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });

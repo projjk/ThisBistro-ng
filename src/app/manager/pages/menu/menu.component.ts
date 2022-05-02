@@ -90,7 +90,6 @@ export class MenuComponent implements OnInit {
 
   onSubmit() {
     if (this.menuForm.invalid) {
-      console.log(this.menuForm);
       this.menuForm.markAllAsTouched();
       this.signal$.next(false);
       return;
