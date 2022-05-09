@@ -5,8 +5,13 @@ They reset every 20 minutes, so feel free to test them!
 
 A restaurant website developed with Angular 13 and Bootstrap 5.
 Admin module is a lazy-loaded module.  
-The backend part is developed with ASP.NET Core 6.0 Web API, Entity Framework 6, PostgreSQL 14, and can be found [here](https://github.com/projjk/ThisBistro-API)
+The backend part is developed with ASP.NET Core 6.0 Web API, Entity Framework 6, PostgreSQL 14, and can be found [here](https://github.com/projjk/ThisBistro-API).
 
+# Security
+- HTTPS Connection
+- Cross-Origin Resource Sharing (CORS)
+
+# Features
 On this website, customers:
 
 - can view menus by category.
